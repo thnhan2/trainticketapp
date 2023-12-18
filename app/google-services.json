@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "840074496073",
+    "project_id": "trainticket-19d0e",
+    "storage_bucket": "trainticket-19d0e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840074496073:android:79bae152a7587319025798",
+        "android_client_info": {
+          "package_name": "com.nhan.trainticketapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ4V0k816hvqF5PjMw2yTKXAY1-22EUHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
