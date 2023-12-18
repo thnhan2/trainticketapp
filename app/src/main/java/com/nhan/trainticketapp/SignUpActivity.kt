@@ -1,6 +1,7 @@
 package com.nhan.trainticketapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -26,27 +27,47 @@ class SignUpActivity : AppCompatActivity() {
         auth = Firebase.auth
         binding.btnSignUp.setOnClickListener {
             val email = binding.etEmail.text.toString()
-            val  password = binding.etPassword.text.toString()
+            val password = binding.etPassword.text.toString()
 
             if (checkAllField()) {
-                auth.createUserWithEmailAndPassword(
-                    email, password
+                // Kiểm tra xem email đã được đăng ký hay chưa
+                auth.fetchSignInMethodsForEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val signInMethods = task.result?.signInMethods ?: emptyList<String>()
 
-                ).addOnCompleteListener {
-                    // if successful account is created
-                    // also signed in
-                    if (it.isSuccessful) {
-                        auth.signOut()
-                        Toast.makeText(this, "Account created successful", Toast.LENGTH_SHORT).show()
+                            if (signInMethods.isNotEmpty()) {
+                                // Email đã được đăng ký
+                                Toast.makeText(this, "Email is already registered", Toast.LENGTH_SHORT).show()
+                            } else {
+                                // Email chưa được đăng ký, thực hiện đăng ký
+                                auth.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener { registrationTask ->
+                                        if (registrationTask.isSuccessful) {
+                                            // Đăng ký thành công, đăng nhập ngay
+                                            auth.signInWithEmailAndPassword(email, password)
+                                                .addOnCompleteListener { signInTask ->
+                                                    if (signInTask.isSuccessful) {
+                                                        // Đăng nhập thành công, mở Activity Sign In
+                                                        Toast.makeText(this, "Account created and signed in successfully", Toast.LENGTH_SHORT).show()
+                                                        startActivity(Intent(this, SignInActivity::class.java))
+                                                        finish()
+                                                    } else {
+                                                        Log.e("Error: ", signInTask.exception.toString())
+                                                    }
+                                                }
+                                        } else {
+                                            Toast.makeText(this, "The email address is already in use by another account.", Toast.LENGTH_SHORT).show()
+                                            Log.e("Error: ", registrationTask.exception.toString())
+                                        }
+                                    }
+                            }
+                        } else {
+                            Log.e("Error: ", task.exception.toString())
+                        }
                     }
-                    else {
-                        Log.e("Error: ", it.exception.toString())
-                    }
-                }
             }
         }
-
-
     }
 
     private fun checkAllField(): Boolean {

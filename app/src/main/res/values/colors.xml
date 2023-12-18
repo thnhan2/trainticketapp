@@ -5,4 +5,8 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="input_text_background">#FAFBFA</color>
     <color name="green">#01B763</color>
+
+
+<!--    app thmeme-->
+    <color name="purple">#9e83d1</color>
 </resources>

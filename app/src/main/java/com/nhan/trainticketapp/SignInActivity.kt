@@ -3,6 +3,8 @@ package com.nhan.trainticketapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
@@ -48,11 +50,18 @@ class SignInActivity : AppCompatActivity() {
             }
         }
 
+        // set under line for text view sign up
+        val mString = binding.tvSignUp.text
+        val mSpannableString = SpannableString(mString)
+        mSpannableString.setSpan(UnderlineSpan(), 0, mSpannableString.length, 0)
+        binding.tvSignUp.text = mSpannableString
+
+        // event for tv sign up
         binding.tvSignUp.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
             // chua xoa activity cua sign in, nhan nut BACK de tro lai
-            finish()
+//            finish()
         }
 
         binding.tvForgotPassword.setOnClickListener {
