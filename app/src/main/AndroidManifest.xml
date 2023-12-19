@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Trainticketapp"
         tools:targetApi="31">
         <activity
+            android:name=".SelectWhereToActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectStartPointActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
         <activity

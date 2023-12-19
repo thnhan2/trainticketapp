@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SelectStartPointActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="?attr/actionBarTheme">
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+
+            android:backgroundTint="@color/transparent"
+            android:src="@drawable/baseline_arrow_back_24"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start point"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <MultiAutoCompleteTextView
+
+            android:id="@+id/edtStartPoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            android:drawableStart="@drawable/baseline_radio_button_checked_24"
+            android:drawablePadding="16dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/transparent"
+            android:hint="Enter start, city" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:background="@android:color/darker_gray"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

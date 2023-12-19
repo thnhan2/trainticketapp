@@ -22,20 +22,29 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(HomeFragment())
+       var currentUsername = intent.getStringExtra("current_user_name")
 
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment())
+
+
+        replaceFragment(HomeFragment.newInstance(currentUsername))
+
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home -> replaceFragment(HomeFragment.newInstance(currentUsername))
                 R.id.activity -> replaceFragment(ActivityFragment())
                 R.id.message -> replaceFragment(MessageFragment())
                 R.id.account -> replaceFragment(AccountFragment())
-                else -> {
-
-                }
             }
-                true
+            true
         }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frameLayout, fragment)
+        fragmentTransaction.commit()
+    }
 
         // sign out demo
 
@@ -52,11 +61,4 @@ class HomeActivity : AppCompatActivity() {
 //            finish()
 //        }
 
-    }
-    private fun replaceFragment(fragment : Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frameLayout, fragment)
-        fragmentTransaction.commit()
-    }
 }
