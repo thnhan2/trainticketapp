@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.nhan.trainticketapp.ListTrainActivity
 import com.nhan.trainticketapp.SelectStartPointActivity
 import com.nhan.trainticketapp.SelectWhereToActivity
 import com.nhan.trainticketapp.databinding.FragmentHomeBinding
@@ -47,6 +48,12 @@ class HomeFragment : Fragment() {
 
         val currentUsername = "Hi " + arguments?.getString("current_user_name")
         binding.textView.text = currentUsername
+
+
+        binding.btnSearch.setOnClickListener {
+            val intent = Intent(requireContext(), ListTrainActivity::class.java)
+            startActivity(intent)
+        }
         return binding.root
     }
 

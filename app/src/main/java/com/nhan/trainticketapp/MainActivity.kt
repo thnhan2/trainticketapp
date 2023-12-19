@@ -11,9 +11,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
+import com.nhan.trainticketapp.model.Train
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                 println(uid)
                 println("kA0mHkJVAzdU2K8XJsErksI9VmI2")
                 val database = FirebaseDatabase.getInstance("https://trainticket-19d0e-default-rtdb.asia-southeast1.firebasedatabase.app")
+
                 val myRef = database.getReference("/users/kA0mHkJVAzdU2K8XJsErksI9VmI2")
 
                 myRef.addValueEventListener(object : ValueEventListener {
@@ -59,6 +62,10 @@ class MainActivity : AppCompatActivity() {
                         Log.w("tag", "Failed to read value.", error.toException())
                     }
                 })
+
+
+
+
             } else {
                 val intent = Intent(this, SignInActivity::class.java)
                 startActivity(intent)
