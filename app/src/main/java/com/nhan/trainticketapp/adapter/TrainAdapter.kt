@@ -19,42 +19,67 @@ class TrainAdapter(private val trainList: List<Train>,
 
     override fun onBindViewHolder(holder: TrainViewHolder, position: Int) {
         val currentTrain = trainList[position]
-        // init view value
-        holder.tvTrainName.text = currentTrain.train_id.toString()
-        holder.tvTrainDescription.text = currentTrain.description
-        val trainName = currentTrain.origin + " -> " + currentTrain.destination
-        holder.tvTrainName.text = trainName
-        holder.tvTimeStart.text = currentTrain.schedules[0].departure_time
-        holder.tvDateStart.text = currentTrain.schedules[0].departure_date
-        var hours: Int = currentTrain.duration
 
-        holder.tvDuration.text = convertMinutesToTimeString(hours)
-        // Gán các giá trị khác vào các TextView khác nếu cần
+        val timeDepart:String = currentTrain.schedules[0].departure_time
+        holder.tvTrainStart.text = timeDepart
+        val duration = convertMinutesToTimeString(currentTrain.duration)
+        holder.tvDuration.text = duration
+        val (newTime, newDay) = addTime(timeDepart, duration)
+        var endTime = ""
+
+        endTime = if (newDay >0 ) {
+            "$newTime (+$newDay days)"
+        } else {
+            newTime
+        }
+
+        holder.tvTrainEnd.text = newTime
+        holder.tvOrigin.text = currentTrain.origin
+        holder.tvDestination.text = currentTrain.destination
+        holder.tvDescription.text = currentTrain.description
+        holder.tvDateDeparture.text = currentTrain.schedules[0].departure_date
 
         holder.itemView.setOnClickListener {
             onItemClick(currentTrain)
         }
     }
 
-    fun convertMinutesToTimeString(minutes: Int): String {
-        val hours = minutes / 60
-        val remainingMinutes = minutes % 60
+    private fun addTime(time: String, duration: String): Pair<String, Int> {
+        val hour = time.substringBefore(":").toInt()
+        val minute = time.substringAfter(":").toInt()
 
-        val hoursString = if (hours > 0) "${hours}h " else ""
-        val minutesString = if (remainingMinutes > 0) "${remainingMinutes}min" else ""
+        val addHour = duration.substringBefore("h").toInt()
+        val addMinute = duration.substringAfter("h").substringBefore("m").toInt()
 
-        return hoursString + minutesString
+        val newMinute = minute + addMinute
+        val newHour = hour + addHour + newMinute / 60
+        val newDay = newHour / 24
+
+        val formattedTime = String.format("%02d:%02d", newHour % 24, newMinute % 60)
+
+        return Pair(formattedTime, newDay)
     }
+
+
+    private fun convertMinutesToTimeString(minutes: Int): String {
+        val hours = minutes / 60
+        val minutesInHour = minutes % 60
+        return "${hours}h${minutesInHour}m"
+    }
+
     override fun getItemCount(): Int {
         return trainList.size
     }
 
     inner class TrainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTrainName: TextView = itemView.findViewById(R.id.tvTrainName)
-        val tvTrainDescription: TextView = itemView.findViewById(R.id.tvRemaining)
-        val tvTimeStart: TextView = itemView.findViewById(R.id.tvTrainStart)
-        val tvDateStart: TextView = itemView.findViewById(R.id.tvTrainDateStart)
-        val tvDuration: TextView = itemView.findViewById(R.id.tvTrainDuration)
+
+        val tvTrainStart: TextView = itemView.findViewById(R.id.tvTrainStart) // time train start
+        val tvOrigin: TextView = itemView.findViewById(R.id.tvOrigin) // origin station
+        val tvTrainEnd: TextView = itemView.findViewById(R.id.tvTrainEnd) // time train end
+        val tvDestination: TextView = itemView.findViewById(R.id.tvDestination) // destination station
+        val tvDuration: TextView = itemView.findViewById(R.id.tvDuration) // time duration
+        val tvDescription: TextView = itemView.findViewById(R.id.tvDescription) // route description
+        val tvDateDeparture: TextView = itemView.findViewById(R.id.tvDateDeparture) // date start
 
 
 
