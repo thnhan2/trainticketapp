@@ -42,12 +42,16 @@ class ListTrainActivity : AppCompatActivity() {
         trainAdapter = TrainAdapter(trainList) {
             train ->
                 val intent = Intent(this,SelectSeatActivity::class.java)
-                startActivity(intent)
+            intent.putExtra("trainId", train.train_id.toString())
+            println(train.train_id)
+            startActivity(intent)
         }
         recyclerView.adapter = trainAdapter
 
         val firebaseService = TrainService()
-        firebaseService.getFilteredTrainData("Ho Chi Minh City", "Da Nang") { filteredTrainData ->
+        val start: String? = intent.getStringExtra("start")
+        val end: String? = intent.getStringExtra("end")
+        firebaseService.getFilteredTrainData(start!!, end!!) { filteredTrainData ->
             trainList.clear()
             trainList.addAll(filteredTrainData.values)
             trainAdapter.notifyDataSetChanged()

@@ -11,11 +11,15 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
 
@@ -23,13 +27,15 @@ class EditProfileActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST = 71
     private lateinit var imageView: ImageView
     private lateinit var etName: EditText
-    private lateinit var etEmail: EditText
+    private lateinit var etAge: EditText
     private lateinit var etPhone: EditText
     private lateinit var btnSave: Button
+    private lateinit var etGender: EditText
+
     private var imageUri: Uri? = null
 
     private fun uploadImageAndSaveUserInfo(
-        imageUri: Uri, name: String, email: String, phone: String
+        imageUri: Uri, name: String,  phone: String, age: String, gender:String
     ) {
         val resizedBitmap = getResizedBitmap(
             imageUri, 800, 800
@@ -61,8 +67,9 @@ class EditProfileActivity : AppCompatActivity() {
                     println(userId)
                     val userInfo = mapOf(
                         "name" to name,
-                        "email" to email,
                         "phone" to phone,
+                        "age" to age,
+                        "gender" to gender,
                         "image" to downloadUri.toString()
                     )
                     userRef.updateChildren(userInfo)
@@ -107,15 +114,41 @@ class EditProfileActivity : AppCompatActivity() {
 
         // Initialize Firebase App Check
         val firebaseAppCheck = FirebaseAppCheck.getInstance()
-        firebaseAppCheck.installAppCheckProviderFactory(
-            SafetyNetAppCheckProviderFactory.getInstance()
-        )
-
+//        firebaseAppCheck.installAppCheckProviderFactory(
+//            SafetyNetAppCheckProviderFactory.getInstance()
+//        )
+        val user = FirebaseAuth.getInstance().currentUser
+        val userId = user?.uid
+        val userRef = userId?.let { FirebaseDatabase.getInstance("https://trainticket-19d0e-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("users").child(it) }
         imageView = findViewById(R.id.imgAvatar)
         etName = findViewById(R.id.etName)
-        etEmail = findViewById(R.id.etEmail)
+        etAge = findViewById(R.id.etAge)
         etPhone = findViewById(R.id.etPhone)
+        etGender = findViewById(R.id.etGender)
         btnSave = findViewById(R.id.btnSave)
+
+
+        userRef!!.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val userData = dataSnapshot.value as? Map<*, *>
+                val name = userData?.get("name") as? String
+                val phone = userData?.get("phone") as? String
+                val gender = userData?.get("gender") as? String
+                val age = userData?.get("age") as? String
+                val uri = userData?.get("image")
+
+                etName.setText(name)
+                etPhone.setText(phone)
+                etGender.setText(gender)
+                etAge.setText(age)
+                Glide.with(this@EditProfileActivity).load(uri).into(imageView)
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Xử lý lỗi khi không thể đọc dữ liệu từ Firebase
+            }
+        })
 
         imageView.setOnClickListener {
             val intent = Intent()
@@ -128,11 +161,12 @@ class EditProfileActivity : AppCompatActivity() {
 
         btnSave.setOnClickListener {
             val name = etName.text.toString().trim()
-            val email = etEmail.text.toString().trim()
+            val age = etAge.text.toString().trim()
             val phone = etPhone.text.toString().trim()
+            val gender = etGender.text.toString().trim()
 
-            if (imageUri != null && name.isNotEmpty() && email.isNotEmpty() && phone.isNotEmpty()) {
-                uploadImageAndSaveUserInfo(imageUri!!, name, email, phone)
+            if (name.isNotEmpty() && age.isNotEmpty() && phone.isNotEmpty() && gender.isNotEmpty()) {
+                uploadImageAndSaveUserInfo(imageUri!!, name, phone, age, gender)
             } else {
                 Toast.makeText(
                     this, "Please fill all fields and select an image", Toast.LENGTH_SHORT

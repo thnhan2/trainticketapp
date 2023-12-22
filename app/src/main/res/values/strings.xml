@@ -1,5 +1,25 @@
 <resources>
     <string name="app_name">trainticketapp</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="your_qr_code">Your QR Code</string>
+    <string name="destination">Destination</string>
+    <string name="origin">Origin</string>
+    <string name="date_start">Date Start</string>
+    <string name="time_start">Time Start</string>
+    <string name="description">Description</string>
+    <string name="seat">Seat</string>
+    <string name="train_id">Train ID</string>
+    <string name="name">Name</string>
+    <string name="user_profile">User Profile</string>
+    <string name="phone">Phone</string>
+    <string name="gender">Gender</string>
+    <string name="age">Age</string>
+    <string name="save">Save</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="email">Email</string>
+    <string name="resend_password">resend password</string>
+    <string name="train_ticket_app">Train Ticket App</string>
+    <string name="book">Book</string>
+    <string name="amount">Amount:</string>
 </resources>

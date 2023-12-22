@@ -7,7 +7,6 @@ plugins {
 android {
     namespace = "com.nhan.trainticketapp"
     compileSdk = 34
-
     defaultConfig {
         applicationId = "com.nhan.trainticketapp"
         minSdk = 29
@@ -40,8 +39,13 @@ android {
 }
 
 dependencies {
+// https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
+    // https://mvnrepository.com/artifact/com.google.zxing/core
+    implementation("com.google.zxing:core:3.3.1")
+
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.google.android.material:material:1.10.0")

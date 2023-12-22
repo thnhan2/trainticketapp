@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">trainticketapp</string>
+    <string name="your_qr_code">Mã QR của bạn</string>
+    <string name="destination">Nơi đến</string>
+    <string name="origin">Nơi bắt đầu</string>
+    <string name="date_start">Ngày khởi hành</string>
+    <string name="time_start">Giờ khởi hành</string>
+    <string name="description">Mô tả</string>
+    <string name="seat">Ghế</string>
+    <string name="train_id">Mã tàu</string>
+    <string name="name">Tên</string>
+    <string name="user_profile">Hồ sơ người dùng</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="gender">Giói tính</string>
+    <string name="age">Tuổi</string>
+    <string name="save">Lưu</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="email">Email</string>
+    <string name="resend_password">Gửi lại pass</string>
+    <string name="train_ticket_app">"Vé tàu rẻ "</string>
+    <string name="book">Đặt vé</string>
+    <string name="amount">Tổng cộng</string>
+</resources>

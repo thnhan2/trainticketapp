@@ -52,6 +52,8 @@ class HomeFragment : Fragment() {
 
         binding.btnSearch.setOnClickListener {
             val intent = Intent(requireContext(), ListTrainActivity::class.java)
+            intent.putExtra("start", binding.tvStartPoint.text)
+            intent.putExtra("end", binding.tvWhereTo.text)
             startActivity(intent)
         }
         return binding.root
