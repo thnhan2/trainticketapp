@@ -24,13 +24,6 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/tvUserId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/green"
-        android:text="user id"
-        android:textSize="20sp" />
-    <TextView
         android:id="@+id/tvTicketNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

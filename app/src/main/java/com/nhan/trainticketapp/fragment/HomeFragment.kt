@@ -9,10 +9,16 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.nhan.trainticketapp.ListTrainActivity
+import com.nhan.trainticketapp.R
 import com.nhan.trainticketapp.SelectStartPointActivity
 import com.nhan.trainticketapp.SelectWhereToActivity
+import com.nhan.trainticketapp.adapter.VoucherAdapter
 import com.nhan.trainticketapp.databinding.FragmentHomeBinding
+import com.nhan.trainticketapp.model.Voucher
+import com.nhan.trainticketapp.service.InternetService
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -49,14 +55,47 @@ class HomeFragment : Fragment() {
         val currentUsername = "Hi " + arguments?.getString("current_user_name")
         binding.textView.text = currentUsername
 
+        if (!InternetService.hasInternet()) {
+            binding.textView2.text =  "You loss connect Internet"
+        }
+
+        // voucher view
+        val recyclerView: RecyclerView = binding.recyclerViewVoucher
+        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = layoutManager
+
+        val voucherList = createVoucherList()
+        val adapter = VoucherAdapter(voucherList)
+        recyclerView.adapter = adapter
 
         binding.btnSearch.setOnClickListener {
+            if (binding.tvStartPoint.text.toString() == "") {
+                binding.tvStartPoint.error = "This field is require"
+            }
+            if (binding.tvWhereTo.text.toString() == "") {
+                binding.tvWhereTo.error = "This field is require"
+            }
+
             val intent = Intent(requireContext(), ListTrainActivity::class.java)
             intent.putExtra("start", binding.tvStartPoint.text)
             intent.putExtra("end", binding.tvWhereTo.text)
             startActivity(intent)
         }
         return binding.root
+    }
+
+        private fun createVoucherList(): List<Voucher> {
+            val voucherList = mutableListOf<Voucher>()
+
+            val voucher1 = Voucher(R.drawable.voucher1, "Student Off 10%")
+            val voucher2 = Voucher(R.drawable.voucher2, "Discount for Christmas 90%")
+            val voucher3 = Voucher(R.drawable.voucher3, "Discount for New year 2024")
+
+            voucherList.add(voucher1)
+            voucherList.add(voucher2)
+            voucherList.add(voucher3)
+
+            return voucherList
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

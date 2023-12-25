@@ -1,13 +1,8 @@
 package com.nhan.trainticketapp
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.nhan.trainticketapp.databinding.ActivityHomeBinding
 import com.nhan.trainticketapp.fragment.AccountFragment
 import com.nhan.trainticketapp.fragment.ActivityFragment
@@ -16,16 +11,16 @@ import com.nhan.trainticketapp.fragment.MessageFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
+    private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       var currentUsername = intent.getStringExtra("current_user_name")
+        val currentUsername = intent.getStringExtra("current_user_name")
 
-
-
+        // Load the initial fragment
         replaceFragment(HomeFragment.newInstance(currentUsername))
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
@@ -40,25 +35,17 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
+        if (fragment == currentFragment) {
+            // Same fragment, no need to replace
+            return
+        }
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
+
         fragmentTransaction.replace(R.id.frameLayout, fragment)
         fragmentTransaction.commit()
+
+        currentFragment = fragment  // Update the current fragment reference
     }
-
-        // sign out demo
-
-//        val btnSignOut: Button = findViewById(R.id.btnSignOut)
-//
-//        var auth: FirebaseAuth
-//        btnSignOut.setOnClickListener {
-//            auth = Firebase.auth
-//            auth.signOut()
-//
-//            val intent = Intent(this, SignInActivity::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//            startActivity(intent)
-//            finish()
-//        }
-
 }

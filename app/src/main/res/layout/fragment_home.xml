@@ -4,11 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
     tools:context=".fragment.HomeFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-
 
     <View
         android:id="@+id/view"
@@ -25,8 +21,8 @@
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:src="@drawable/logo_ve_tau_re"
@@ -37,30 +33,31 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="93dp"
         android:backgroundTint="@color/white"
         android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
-        android:text="Hi Nhan"
-        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
-        android:layout_marginBottom="617dp"
-        android:text="The fast way to booking a ticket for your trip"
-        android:textColor="#ffffff"
-        android:textSize="18sp"
+        android:text="@string/question"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/ivLogo"
+        app:layout_constraintBottom_toTopOf="@id/view2"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,18 +92,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="62dp"
             android:layout_marginTop="52dp"
-            android:text="Start point"
-            android:textColor="@color/black"
+            android:text="@string/start_point"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvStartPoint"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="62dp"
+            app:layout_constraintEnd_toStartOf="@id/btnReverse"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvStartPointLabel" />
 
@@ -114,7 +112,7 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/white_grey"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +123,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="62dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
+            android:textSize="20sp"
             android:text="Where to?"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvStartPoint" />
@@ -133,11 +132,13 @@
 
         <TextView
             android:id="@+id/tvWhereTo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="62dp"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="25dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvWhereToLabel" />
 
@@ -145,7 +146,7 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/white_grey"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -173,16 +174,16 @@
             tools:layout_editor_absoluteY="97dp" />
 
         <ImageButton
+            app:cornerRadius="16dp"
             android:id="@+id/btnReverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="20dp"
-            android:src="@drawable/baseline_support_agent_24"
-            tools:layout_editor_absoluteX="282dp"
-            tools:layout_editor_absoluteY="86dp" />
+            android:src="@drawable/swap_vert_24px"
+            />
 
        </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -198,7 +199,33 @@
         app:layout_constraintTop_toBottomOf="@+id/view2"
         android:layout_marginTop="20dp"
         android:textSize="18sp"
-        android:text="Search" />
+        android:text="@string/search" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Hot Offer"
+        android:id="@+id/tvOffer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSearch"
+        android:textColor="@color/blue_dark"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textSize="18sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recyclerViewVoucher"
+        app:layout_constraintTop_toBottomOf="@id/tvOffer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

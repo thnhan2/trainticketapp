@@ -6,11 +6,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.transition.TransitionInflater
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
@@ -22,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
+
 
 class EditProfileActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST = 71
@@ -35,7 +39,7 @@ class EditProfileActivity : AppCompatActivity() {
     private var imageUri: Uri? = null
 
     private fun uploadImageAndSaveUserInfo(
-        imageUri: Uri, name: String,  phone: String, age: String, gender:String
+        imageUri: Uri, name: String, phone: String, age: String, gender: String
     ) {
         val resizedBitmap = getResizedBitmap(
             imageUri, 800, 800
@@ -63,7 +67,9 @@ class EditProfileActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 val downloadUri = task.result
                 if (userId != null) {
-                    val userRef = FirebaseDatabase.getInstance("https://trainticket-19d0e-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("users").child(userId)
+                    val userRef =
+                        FirebaseDatabase.getInstance("https://trainticket-19d0e-default-rtdb.asia-southeast1.firebasedatabase.app")
+                            .getReference("users").child(userId)
                     println(userId)
                     val userInfo = mapOf(
                         "name" to name,
@@ -72,7 +78,11 @@ class EditProfileActivity : AppCompatActivity() {
                         "gender" to gender,
                         "image" to downloadUri.toString()
                     )
-                    userRef.updateChildren(userInfo)
+                    userRef.updateChildren(userInfo).addOnCompleteListener {
+                        val resultIntent = Intent()
+                        resultIntent.putExtra("isProfileUpdated", true)
+                        setResult(Activity.RESULT_OK, resultIntent)
+                    }
                 }
             } else {
                 Toast.makeText(
@@ -106,20 +116,36 @@ class EditProfileActivity : AppCompatActivity() {
         return resizedBitmap
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
         // Initialize Firebase
         FirebaseApp.initializeApp(this)
 
+        val slideLeft = TransitionInflater.from(this).inflateTransition(R.transition.slide_to_left)
+        window.enterTransition = slideLeft
         // Initialize Firebase App Check
         val firebaseAppCheck = FirebaseAppCheck.getInstance()
-//        firebaseAppCheck.installAppCheckProviderFactory(
-//            SafetyNetAppCheckProviderFactory.getInstance()
-//        )
+        firebaseAppCheck.installAppCheckProviderFactory(
+            SafetyNetAppCheckProviderFactory.getInstance()
+        )
         val user = FirebaseAuth.getInstance().currentUser
         val userId = user?.uid
-        val userRef = userId?.let { FirebaseDatabase.getInstance("https://trainticket-19d0e-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("users").child(it) }
+        val userRef = userId?.let {
+            FirebaseDatabase.getInstance("https://trainticket-19d0e-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("users").child(it)
+        }
         imageView = findViewById(R.id.imgAvatar)
         etName = findViewById(R.id.etName)
         etAge = findViewById(R.id.etAge)
@@ -165,12 +191,37 @@ class EditProfileActivity : AppCompatActivity() {
             val phone = etPhone.text.toString().trim()
             val gender = etGender.text.toString().trim()
 
-            if (name.isNotEmpty() && age.isNotEmpty() && phone.isNotEmpty() && gender.isNotEmpty()) {
-                uploadImageAndSaveUserInfo(imageUri!!, name, phone, age, gender)
+            if (name.isNotEmpty() || age.isNotEmpty() || phone.isNotEmpty() || gender.isNotEmpty()) {
+                if (imageUri != null) {
+                    uploadImageAndSaveUserInfo(imageUri!!, name, phone, age, gender)
+                } else {
+                    saveUserInfo(name, phone, age, gender)
+                }
             } else {
                 Toast.makeText(
-                    this, "Please fill all fields and select an image", Toast.LENGTH_SHORT
+                    this, "Please fill at least one field", Toast.LENGTH_SHORT
                 ).show()
+            }
+        }
+
+
+    }
+
+    private fun saveUserInfo(name: String, phone: String, age: String, gender: String) {
+        val user = FirebaseAuth.getInstance().currentUser
+        val userId = user?.uid
+        if (userId != null) {
+            val userRef =
+                FirebaseDatabase.getInstance("https://trainticket-19d0e-default-rtdb.asia-southeast1.firebasedatabase.app")
+                    .getReference("users").child(userId)
+            val userInfo = mapOf(
+                "name" to name, "phone" to phone, "age" to age, "gender" to gender
+            )
+            userRef.updateChildren(userInfo).addOnSuccessListener {
+                val resultIntent = Intent()
+                resultIntent.putExtra("isProfileUpdated", true)
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
             }
         }
     }
@@ -179,8 +230,7 @@ class EditProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             imageUri = data.data
-            imageView.setImageURI(imageUri) // Hiển thị hình ảnh đã chọn
+            imageView.setImageURI(imageUri)
         }
     }
-
 }

@@ -32,15 +32,13 @@ class TicketAdapter(private val ticketList: List<Ticket>, private val listener: 
     inner class TicketViewHolder(itemView: View, private val listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
         private val seatTextView: TextView = itemView.findViewById(R.id.tvSeat)
         private val trainIdTextView: TextView = itemView.findViewById(R.id.tvTrainID)
-        private val userIdTextView: TextView = itemView.findViewById(R.id.tvUserId)
         private val ticketNoTextView: TextView = itemView.findViewById(R.id.tvTicketNo)
         private val buttonDetail: Button = itemView.findViewById(R.id.btnDetail)
 
         fun bind(ticket: Ticket) {
             seatTextView.text = "Seat: ${ticket.seat+1}"
             trainIdTextView.text = "Train ID: ${ticket.train_id}"
-            userIdTextView.text = "User ID: ${ticket.user_id}"
-            ticketNoTextView.text = "Ticket No: ${ticket.train_id}${ticket.user_id}"
+            ticketNoTextView.text = "Ticket No: A${ticket.seat}"
             buttonDetail.text = "Detail"
             buttonDetail.setOnClickListener { listener.onDetailClick(ticket) }
         }

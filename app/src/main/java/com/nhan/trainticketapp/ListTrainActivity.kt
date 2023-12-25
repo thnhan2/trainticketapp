@@ -2,9 +2,13 @@ package com.nhan.trainticketapp
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,34 +37,43 @@ class ListTrainActivity : AppCompatActivity() {
             setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24)
         }
 
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
         trainList = mutableListOf()
 
         // select seat
-        trainAdapter = TrainAdapter(trainList) {
-            train ->
-                val intent = Intent(this,SelectSeatActivity::class.java)
+        trainAdapter = TrainAdapter(trainList) { train ->
+            val intent = Intent(this,SelectSeatActivity::class.java)
             intent.putExtra("trainId", train.train_id.toString())
-            println(train.train_id)
             startActivity(intent)
         }
-        recyclerView.adapter = trainAdapter
+
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
+            layoutManager = LinearLayoutManager(this@ListTrainActivity)
+            adapter = trainAdapter
+        }
 
         val firebaseService = TrainService()
         val start: String? = intent.getStringExtra("start")
         val end: String? = intent.getStringExtra("end")
-        firebaseService.getFilteredTrainData(start!!, end!!) { filteredTrainData ->
-            trainList.clear()
-            trainList.addAll(filteredTrainData.values)
-            trainAdapter.notifyDataSetChanged()
+        if (start != null && end != null) {
+            firebaseService.getFilteredTrainData(start, end) { filteredTrainData ->
+                trainList.clear()
+                if (filteredTrainData.values.isEmpty()) {
+                    val tvNoTrain = findViewById<TextView>(R.id.tvNoTrain)
+                    val ivNotrain = findViewById<ImageView>(R.id.ivNoTrain)
+                    tvNoTrain.visibility = View.VISIBLE
+                    ivNotrain.visibility = View.VISIBLE
+                } else {
+                    trainList.addAll(filteredTrainData.values)
+                }
+                trainAdapter.notifyDataSetChanged()
+            }
         }
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                onBackPressed() // Xử lý sự kiện khi nhấn nút back
+                onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)

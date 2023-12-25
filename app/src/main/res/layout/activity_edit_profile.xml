@@ -1,73 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
-    android:layout_margin="40dp"
     android:orientation="vertical"
     tools:context=".EditProfileActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:text="@string/user_profile" />
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/primary"
+    app:title="@string/account_information"
+    app:navigationIcon="@drawable/baseline_arrow_back_24"
+    app:titleTextColor="@android:color/white"
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    />
+
+
 
     <de.hdodenhof.circleimageview.CircleImageView
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+
         android:id="@+id/imgAvatar"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/train_logo" />
 
-    <EditText
-        android:id="@+id/etName"
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/imgAvatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="@string/name"
-        android:textSize="20sp"
-        android:inputType="text" />
+        android:id="@+id/etNameLayout"
+        >
+        <EditText
+            android:hint="@string/name"
+            android:textSize="20sp"
+            android:inputType="text"
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        app:layout_constraintTop_toBottomOf="@id/etNameLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:ems="10"
+        android:id="@+id/etPhoneLayout"
+         >
+        <EditText
         android:id="@+id/etPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:hint="@string/phone"
-        android:textSize="20sp"
-        android:inputType="text" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/phone"
+            android:textSize="20sp"
+            android:inputType="phone"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etGender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:textSize="20sp"
-        android:hint="@string/gender" />
 
-    <EditText
-        android:id="@+id/etAge"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etGenderLayout"
+        app:layout_constraintTop_toBottomOf="@id/etPhoneLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_margin="30dp"
         android:ems="10"
-        android:textSize="20sp"
-        android:hint="@string/age" />
+        >
+        <EditText
+            android:id="@+id/etGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:textSize="20sp"
+            android:hint="@string/gender" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+ <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etAgeLayout"
+        app:layout_constraintTop_toBottomOf="@id/etGenderLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:ems="10"
+        >
+     <EditText
+         android:id="@+id/etAge"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="20dp"
+         android:ems="10"
+         android:textSize="20sp"
+         android:hint="@string/age" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="@string/save" />
+        android:text="@string/save"
+        app:cornerRadius="8dp"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Trainticketapp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+            <item name="android:windowBackground">@color/dark_theme_dracula</item>
+            <item name="android:colorPrimary">@color/primary</item>
+            <item name="android:colorPrimaryDark">@color/primary_dark</item>
+            <item name="android:colorAccent">@color/primary_dark</item>
+           <item name="android:textColor">#FFF5F5</item>
     </style>
 </resources>

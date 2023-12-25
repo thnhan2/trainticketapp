@@ -14,7 +14,7 @@
         android:paddingBottom="20dp"
         android:paddingTop="20dp"
         android:layout_marginBottom="42dp"
-        android:background="@color/green"
+        android:background="@color/primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,63 +23,135 @@
             android:id="@+id/tvUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="38dp"
-            android:layout_marginEnd="83dp"
-            android:text="User name"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/circleImageView"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.1" />
+            app:layout_constraintStart_toEndOf="@id/circleImageView"
+            />
 
-        <ImageView
-            android:id="@+id/btnEditProfile"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="1dp"
-            android:elevation="1dp"
-            android:src="@drawable/edit"
-            app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-            app:layout_constraintEnd_toEndOf="@+id/circleImageView" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circleImageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-
+            android:layout_width="78dp"
+            android:layout_height="78dp"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/train_logo"
-            app:layout_constraintBottom_toBottomOf="@id/constraintLayout"
-            app:layout_constraintEnd_toEndOf="@id/constraintLayout"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/member"
+            android:layout_marginStart="10dp"
+            app:layout_constraintTop_toBottomOf="@id/tvUserName"
+           app:layout_constraintStart_toEndOf="@id/circleImageView"
+            />
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/edit"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:flow_verticalAlign="center"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tvChangeLanguage"
+        android:id="@+id/tvReward"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/baseline_card_giftcard_24"
         android:layout_marginBottom="30dp"
-        android:text="Point 0"
+        android:text="@string/reward"
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/white_grey"
+        app:layout_constraintTop_toBottomOf="@id/tvReward"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
+        android:id="@+id/line4"
+        />
+    <TextView
+        android:id="@+id/btnChangeDarkMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/line4"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/change_ui_mode"
+        android:layout_marginStart="32dp"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/baseline_dark_mode_24"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/white_grey"
+        app:layout_constraintTop_toBottomOf="@id/btnChangeDarkMode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
+        android:id="@+id/line6"
+        />
+    <TextView
+        android:id="@+id/tvSupport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:drawablePadding="10dp"
+        app:layout_goneMarginTop="20dp"
+        android:layout_marginBottom="455dp"
+        android:drawableStart="@drawable/baseline_support_agent_24"
+        android:text="@string/support"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/line6" />
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/white_grey"
+        app:layout_constraintTop_toBottomOf="@id/tvSupport"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
+        android:id="@+id/line5"
+        />
     <TextView
         android:id="@+id/tvLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:drawablePadding="10dp"
+        app:layout_goneMarginTop="20dp"
         android:layout_marginBottom="455dp"
-        android:text="Log Out"
+        android:drawableStart="@drawable/baseline_logout_24"
+        android:text="@string/log_out"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvChangeLanguage" />
+        app:layout_constraintTop_toBottomOf="@id/line5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,4 +21,12 @@
     <string name="train_ticket_app">"Vé tàu rẻ "</string>
     <string name="book">Đặt vé</string>
     <string name="amount">Tổng cộng</string>
+    <string name="edit">Sửa</string>
+    <string name="member">Thành viên</string>
+    <string name="log_out">Đăng xuất</string>
+    <string name="change_ui_mode">Thay đổi giao diện</string>
+    <string name="reward">Ưu đãi</string>
+    <string name="account_information">Thông tin tài khoản</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="ticket">Vé của tôi</string>
 </resources>

@@ -22,4 +22,19 @@
     <string name="train_ticket_app">Train Ticket App</string>
     <string name="book">Book</string>
     <string name="amount">Amount:</string>
+    <string name="edit">Edit</string>
+    <string name="member">Member</string>
+    <string name="log_out">Log Out</string>
+    <string name="change_ui_mode">Change UI Mode</string>
+    <string name="reward">Reward</string>
+    <string name="account_information">Account information</string>
+    <string name="search">Search</string>
+    <string name="ticket">My Tickets</string>
+    <string name="question">Where are you going?</string>
+    <string name="start_point">Start point</string>
+    <string name="train_not_found">train not found</string>
+    <string name="no_trains_found_matching_your_search">No trains found matching your search</string>
+    <string name="duration">Duration</string>
+    <string name="download">Download</string>
+    <string name="support">Support</string>
 </resources>
